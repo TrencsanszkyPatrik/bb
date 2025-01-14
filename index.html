@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="hu">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,6 +18,15 @@
         h1 {
             color: #4CAF50;
             font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        #counter {
+            font-size: 1.5rem;
+            color: #333;
+            background-color: #ffeb3b;
+            padding: 10px;
+            border-radius: 5px;
             margin-bottom: 20px;
         }
 
@@ -113,11 +123,11 @@
                 height: 350px;
             }
         }
-
     </style>
 </head>
-<body>
 
+<body>
+    <div id="counter"></div>
     <h1>Kedvenc helyeink</h1>
     <div id="map"></div>
 
@@ -135,7 +145,8 @@
 
     <div class="place-info">
         <h2>Ebédszüneti park</h2>
-        <p>Igazából a legtöbb időt itt töltöttük, de egyáltalán nem bánom. Legyen az izzasztó meleg, vagy fagyos hideg, mindig megéri itt bármennyit várni a másikra.</p>
+        <p>Igazából a legtöbb időt itt töltöttük, de egyáltalán nem bánom. Legyen az izzasztó meleg, vagy fagyos hideg,
+            mindig megéri itt bármennyit várni a másikra.</p>
         <img src="img/5.jpg" alt="Ebédszüneti park" />
     </div>
 
@@ -147,25 +158,29 @@
 
     <div class="place-info">
         <h2>Otthonod</h2>
-        <p>Suli után, mindig itt kötünk ki általában. Elsőnek csak a bérházba üldögéltünk, most már pedig Vajákot nézünk fent. Szeretem ezt a helyet!</p>
-        
+        <p>Suli után, mindig itt kötünk ki általában. Elsőnek csak a bérházba üldögéltünk, most már pedig Vajákot nézünk
+            fent. Szeretem ezt a helyet!</p>
+
     </div>
 
     <div class="place-info">
         <h2>Otthonom</h2>
-        <p>Itt is rengetegszer megfordultunk már, volt, hogy napokat, volt, hogy csak aludni jártunk haza. Mindenesetre ide is szép emlékek fűznek.</p>
-        
+        <p>Itt is rengetegszer megfordultunk már, volt, hogy napokat, volt, hogy csak aludni jártunk haza. Mindenesetre
+            ide is szép emlékek fűznek.</p>
+
     </div>
 
     <div class="place-info">
         <h2>Legtávolabbi közös utunk: <em>Nyíregyházi állatkert</em></h2>
-        <p>Legizgalmasabb, és talán leghosszabb utunk is. Főleg a vonatozás kikészít. De legalább feltaláltuk magunkat sokszor, és nézhettünk a sok makit. Köztük téged is.</p>
+        <p>Legizgalmasabb, és talán leghosszabb utunk is. Főleg a vonatozás kikészít. De legalább feltaláltuk magunkat
+            sokszor, és nézhettünk a sok makit. Köztük téged is.</p>
         <img src="img/7.jpg" alt="Nyíregyházi állatkert" />
     </div>
 
     <div class="place-info">
         <h2>Legtöbb együtt töltött percek: <em>Patak!</em></h2>
-        <p>Igaz, még nem voltam sokszor, de ha voltam is, akkor legalább sok időre. Nagyon-nagyon jók az itt töltött idők, mindig van mit csinálnunk.</p>
+        <p>Igaz, még nem voltam sokszor, de ha voltam is, akkor legalább sok időre. Nagyon-nagyon jók az itt töltött
+            idők, mindig van mit csinálnunk.</p>
         <img src="img/3.jpg" alt="Patak" />
     </div>
 
@@ -177,13 +192,15 @@
 
     <div class="place-info">
         <h2>DVTK Aréna</h2>
-        <p>Eddig nulla közöm volt ehhez a helyhez, de mióta te vagy, ha tehetem, téged nézlek miközben játszol. Már lassacskán ez is közös hely.</p>
-        
+        <p>Eddig nulla közöm volt ehhez a helyhez, de mióta te vagy, ha tehetem, téged nézlek miközben játszol. Már
+            lassacskán ez is közös hely.</p>
+
     </div>
 
     <div class="place-info">
         <h2>Első közös bálunk: <em>Kandó-Ferenczi</em></h2>
-        <p>Nem gondoltam volna, hogy egy unalmas bál is ilyen jó lehet veled. Idén is megyünk, most már nálam alszol!</p>
+        <p>Nem gondoltam volna, hogy egy unalmas bál is ilyen jó lehet veled. Idén is megyünk, most már nálam alszol!
+        </p>
         <img src="img/10.jpg" alt="Első közös bálunk" />
     </div>
 
@@ -194,8 +211,23 @@
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
-        var map = L.map('map').setView([48.1032, 20.7775], 12);  
-    
+
+        function calculateDays() {
+            var startDate = new Date("2023-11-13");
+            var currentDate = new Date();
+
+            var timeDifference = currentDate - startDate;
+            var dayDifference = Math.floor(timeDifference / (1000 * 3600 * 24));
+
+            document.getElementById("counter").innerHTML = "Már " + dayDifference + " napja boldogítasz!";
+        }
+
+        window.onload = function () {
+            calculateDays();
+        }
+
+        var map = L.map('map').setView([48.1032, 20.7775], 12);
+
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
@@ -203,7 +235,7 @@
         var marker1 = L.marker([48.0971662875097, 20.770084131229538]).addTo(map);
         marker1.bindPopup("<b>Első találkozó helyszíne</b><br>Ez volt mindennek az alapja.").openPopup();
 
-        var marker2 = L.marker([48.10629604427665, 20.788621634471824]).addTo(map);  
+        var marker2 = L.marker([48.10629604427665, 20.788621634471824]).addTo(map);
         marker2.bindPopup("<b>Kedvenc 'éttermünk'</b><br>Sokszor megfordultunk már itt.").openPopup();
 
         var marker3 = L.marker([48.105333817816586, 20.782899812322853]).addTo(map);
@@ -235,7 +267,7 @@
 
         var marker12 = L.marker([48.08751826100972, 20.783758992425017]).addTo(map);
         marker12.bindPopup("<b>Első közös bálunk</b>").openPopup();
-        
+
         var marker13 = L.marker([48.07908674294881, 20.776877720445107]).addTo(map);
         marker13.bindPopup("<b>Első közös bálunk</b>").openPopup();
 
@@ -246,4 +278,5 @@
     </script>
 
 </body>
+
 </html>
