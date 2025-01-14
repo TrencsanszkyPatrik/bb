@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kedvenc helyek térképe - OpenStreetMap</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f9;
+            padding: 20px;
+            margin: 0;
+        }
+
+        h1 {
+            color: #4CAF50;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        #map {
+            height: 500px;
+            width: 100%;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .place-info {
+            margin-top: 20px;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            max-width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .place-info h2 {
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .place-info p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .place-info img {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            border-radius: 8px;
+            margin-top: 10px;
+            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .place-info strong {
+            color: #333;
+        }
+
+        .place-info em {
+            font-style: italic;
+            color: #4CAF50;
+        }
+
+        /* Reszponzivitás - mobil eszközökre */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .place-info h2 {
+                font-size: 1.2rem;
+            }
+
+            .place-info p {
+                font-size: 0.9rem;
+            }
+
+            .place-info img {
+                max-width: 100%;
+            }
+
+            #map {
+                height: 400px;
+            }
+        }
+
+        /* Kisebb kijelzők (telefonok) optimalizálása */
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .place-info {
+                padding: 10px;
+            }
+
+            .place-info h2 {
+                font-size: 1rem;
+            }
+
+            .place-info p {
+                font-size: 0.85rem;
+            }
+
+            #map {
+                height: 350px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>Kedvenc helyeink</h1>
+    <div id="map"></div>
+
+    <div class="place-info">
+        <h2>Első találkozó helyszíne: <em>Avas Kilátó</em></h2>
+        <p>Ez volt a legelső hely, ahol találkoztunk, itt kezdődött minden. Itt történt meg az első csókunk is.. </p>
+        <img src="img/9.jpg" alt="Avas Kilátó" />
+    </div>
+
+    <div class="place-info">
+        <h2>Kedvenc "éttermünk": <em>Plázás meki</em></h2>
+        <p>Rengeteg alkalommal jártunk már itt, vagy csak unatkozás miatt, vagy pedig hogy ne fagyoskodjunk.</p>
+        <img src="img/mc.jpg" alt="Plázás meki" />
+    </div>
+
+    <div class="place-info">
+        <h2>Ebédszüneti park</h2>
+        <p>Igazából a legtöbb időt itt töltöttük, de egyáltalán nem bánom. Legyen az izzasztó meleg, vagy fagyos hideg, mindig megéri itt bármennyit várni a másikra.</p>
+        <img src="img/5.jpg" alt="Ebédszüneti park" />
+    </div>
+
+    <div class="place-info">
+        <h2>Bulihelyszínek: <em>Roki1, Roki2</em></h2>
+        <p>Buli van? Nekünk ott a helyünk! Felejthetetlen pillanatok.</p>
+        <img src="img/4.jpg" alt="Bulihelyszínek" />
+    </div>
+
+    <div class="place-info">
+        <h2>Otthonod</h2>
+        <p>Suli után, mindig itt kötünk ki általában. Elsőnek csak a bérházba üldögéltünk, most már pedig Vajákot nézünk fent. Szeretem ezt a helyet!</p>
+        
+    </div>
+
+    <div class="place-info">
+        <h2>Otthonom</h2>
+        <p>Itt is rengetegszer megfordultunk már, volt, hogy napokat, volt, hogy csak aludni jártunk haza. Mindenesetre ide is szép emlékek fűznek.</p>
+        
+    </div>
+
+    <div class="place-info">
+        <h2>Legtávolabbi közös utunk: <em>Nyíregyházi állatkert</em></h2>
+        <p>Legizgalmasabb, és talán leghosszabb utunk is. Főleg a vonatozás kikészít. De legalább feltaláltuk magunkat sokszor, és nézhettünk a sok makit. Köztük téged is.</p>
+        <img src="img/7.jpg" alt="Nyíregyházi állatkert" />
+    </div>
+
+    <div class="place-info">
+        <h2>Legtöbb együtt töltött percek: <em>Patak!</em></h2>
+        <p>Igaz, még nem voltam sokszor, de ha voltam is, akkor legalább sok időre. Nagyon-nagyon jók az itt töltött idők, mindig van mit csinálnunk.</p>
+        <img src="img/3.jpg" alt="Patak" />
+    </div>
+
+    <div class="place-info">
+        <h2>Kastélytúra: <em>Füzérradvány</em></h2>
+        <p>Neked sokadik alkalom, nekem első, de még így is tökéletes volt.</p>
+        <img src="img/2.jpg" alt="Kastélytúra Füzérradvány" />
+    </div>
+
+    <div class="place-info">
+        <h2>DVTK Aréna</h2>
+        <p>Eddig nulla közöm volt ehhez a helyhez, de mióta te vagy, ha tehetem, téged nézlek miközben játszol. Már lassacskán ez is közös hely.</p>
+        
+    </div>
+
+    <div class="place-info">
+        <h2>Első közös bálunk: <em>Kandó-Ferenczi</em></h2>
+        <p>Nem gondoltam volna, hogy egy unalmas bál is ilyen jó lehet veled. Idén is megyünk, most már nálam alszol!</p>
+        <img src="img/10.jpg" alt="Első közös bálunk" />
+    </div>
+
+    <div class="place-info">
+        <h2>Első közös szilveszter: <em>Sokszempontból is felejthetetlen</em></h2>
+        <p>Összességében, kurvajó volt.</p>
+    </div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map').setView([48.1032, 20.7775], 12);  
+    
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        var marker1 = L.marker([48.0971662875097, 20.770084131229538]).addTo(map);
+        marker1.bindPopup("<b>Első találkozó helyszíne</b><br>Ez volt mindennek az alapja.").openPopup();
+
+        var marker2 = L.marker([48.10629604427665, 20.788621634471824]).addTo(map);  
+        marker2.bindPopup("<b>Kedvenc 'éttermünk'</b><br>Sokszor megfordultunk már itt.").openPopup();
+
+        var marker3 = L.marker([48.105333817816586, 20.782899812322853]).addTo(map);
+        marker3.bindPopup("<b>Ébédszünet</b>").openPopup();
+
+        var marker4 = L.marker([48.079836554789445, 20.76859528265725]).addTo(map);
+        marker4.bindPopup("<b>Rockwell Klub</b>").openPopup();
+
+        var marker5 = L.marker([48.0812636924582, 20.764352906176565]).addTo(map);
+        marker5.bindPopup("<b>Rockwell Klub II</b>").openPopup();
+
+        var marker6 = L.marker([48.1028962119323, 20.746332406558412]).addTo(map);
+        marker6.bindPopup("<b>Második otthonom</b>").openPopup();
+
+        var marker7 = L.marker([48.07836212634672, 20.77693749464131]).addTo(map);
+        marker7.bindPopup("<b>Itt lakok, hihi</b>").openPopup();
+
+        var marker8 = L.marker([48.00181911785767, 21.7238876794228]).addTo(map);
+        marker8.bindPopup("<b>Állatkert</b><br>Nyíregyháza").openPopup();
+
+        var marker9 = L.marker([48.308651238449194, 21.551898874642433]).addTo(map);
+        marker9.bindPopup("<b>Sokadik otthonunk</b><br>Patak").openPopup();
+
+        var marker10 = L.marker([48.484383542690246, 21.529051079862363]).addTo(map);
+        marker10.bindPopup("<b>Kastálytúra</b><br>Füzérradvány").openPopup();
+
+        var marker11 = L.marker([48.09871398205736, 20.716555137664187]).addTo(map);
+        marker11.bindPopup("<b>DVTK Aréna</b><br>Miskolc").openPopup();
+
+        var marker12 = L.marker([48.08751826100972, 20.783758992425017]).addTo(map);
+        marker12.bindPopup("<b>Első közös bálunk</b>").openPopup();
+        
+        var marker13 = L.marker([48.07908674294881, 20.776877720445107]).addTo(map);
+        marker13.bindPopup("<b>Első közös bálunk</b>").openPopup();
+
+        var marker14 = L.marker([48.01196273822307, 20.842299168860457]).addTo(map);
+        marker14.bindPopup("<b>Kis pancsi?</b><br>Mályi-tó").openPopup();
+
+        map.setView([48.0971662875097, 20.770084131229538], 16.5);
+    </script>
+
+</body>
+</html>
